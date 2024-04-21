@@ -4,7 +4,6 @@ from users.models import User
 
 
 class UserSerializer(serializers.ModelSerializer):
-    '''Сериализатор пользователя'''
 
     class Meta:
         model = User
@@ -12,7 +11,6 @@ class UserSerializer(serializers.ModelSerializer):
 
 
 class UserCreateSerializer(serializers.Serializer):
-    '''Сериализатор создания пользователя'''
 
     def create(self, validated_data):
         password = validated_data.get('password')

@@ -15,7 +15,6 @@ class UserListAPIView(generics.ListAPIView):
 
 
 class UserCreateAPIView(generics.CreateAPIView):
-    """CREATE User (Регистрация)"""
     serializer_class = UserCreateSerializer
 
     def perform_create(self, serializer):
@@ -25,7 +24,6 @@ class UserCreateAPIView(generics.CreateAPIView):
 
 
 class UserRetrieveAPIView(generics.RetrieveAPIView):
-    """READ ONE User"""
     serializer_class = UserSerializer
     queryset = User.objects.all()
     permission_classes = [IsAuthenticated & IsOwner]
@@ -33,7 +31,6 @@ class UserRetrieveAPIView(generics.RetrieveAPIView):
 
 
 class UserUpdateAPIView(generics.UpdateAPIView):
-    """UPDATE PUT AND PATCH User"""
     serializer_class = UserSerializer
     queryset = User.objects.all()
     permission_classes = [IsAuthenticated & IsOwner]
@@ -41,7 +38,6 @@ class UserUpdateAPIView(generics.UpdateAPIView):
 
 
 class UserDestroyAPIView(generics.DestroyAPIView):
-    """DELETE User"""
     serializer_class = UserSerializer
     queryset = User.objects.all()
     permission_classes = [IsAuthenticated & IsOwner]
