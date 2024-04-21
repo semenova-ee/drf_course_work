@@ -37,6 +37,7 @@ INSTALLED_APPS = [
     'django_filters',
 
     'users',
+    'habits_tracker',
     ]
 
 MIDDLEWARE = [
@@ -142,9 +143,9 @@ SIMPLE_JWT = {
 
 # CELERY
 # URL-адрес брокера сообщений
-CELERY_BROKER_URL = 'redis://redis:6379/0'
+CELERY_BROKER_URL = 'redis://127.0.0.1:6379/0'
 # URL-адрес брокера результатов, также Redis
-CELERY_RESULT_BACKEND = 'redis://redis:6379/0'
+CELERY_RESULT_BACKEND = 'redis://127.0.0.1:6379/0'
 # Отслеживание задач CELERY
 CELERY_TASK_TRACK_STARTED = True
 # Максимальное время на выполнение задачи
@@ -174,3 +175,4 @@ CORS_ALLOW_ALL_ORIGINS = False
 
 TELEGRAM_TOKEN = os.getenv('TELEGRAM_TOKEN')
 TELEGRAM_CHAT_ID = os.getenv('TELEGRAM_CHAT_ID')
+
