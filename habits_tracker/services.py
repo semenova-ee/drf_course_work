@@ -1,19 +1,17 @@
-import json
-from datetime import datetime, date
-
-from django_celery_beat.models import PeriodicTask, IntervalSchedule
+from django.conf import settings
+import requests
 
 
-def create_periodic_task(frequency, pk, time):
-    schedule, created = IntervalSchedule.objects.get_or_create(
-        every=frequency,
-        period=IntervalSchedule.DAYS,
-     )
-    return PeriodicTask.objects.create(
-        interval=schedule,
-        name=f'{pk}',
-        task='habits_tracker.tasks.habits_send_telegram',
-        start_time=datetime.combine(date.today(), time),
-        args=json.dumps({}),
-        kwargs=json.dumps({'pk': pk})
-    )
+class MessageToTelegram:
+    URL = 'https://api.telegram.org/bot'
+    TOKEN = settings.TELEGRAM_TOKEN
+    TELEGRAM_CHAT_ID = settings.TELEGRAM_CHAT_ID
+
+    def send(self, message):
+        requests.post(
+            url=f'{self.URL}{self.TOKEN}/sendMessage',
+            data={
+                'chat_id': self.TELEGRAM_CHAT_ID,
+                'text': message
+            }
+        )

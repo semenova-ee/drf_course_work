@@ -176,3 +176,13 @@ CORS_ALLOW_ALL_ORIGINS = False
 TELEGRAM_TOKEN = os.getenv('TELEGRAM_TOKEN')
 TELEGRAM_CHAT_ID = os.getenv('TELEGRAM_CHAT_ID')
 
+# SWAGGER_SETTINGS = {
+#     'USE_SESSION_AUTH': False,
+#     'SECURITY_DEFINITIONS': {
+#         'Bearer': {
+#             'type': 'apiKey',
+#             'name': 'Authorization',
+#             'in': 'header'
+#         }
+#     }
+# }

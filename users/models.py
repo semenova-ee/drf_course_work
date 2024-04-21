@@ -8,6 +8,7 @@ NULLABLE = {'null': True, 'blank': True}
 class User(AbstractUser):
 
     username = None
+
     email = models.EmailField(unique=True, verbose_name='Электронная почта')
 
     USERNAME_FIELD = "email"

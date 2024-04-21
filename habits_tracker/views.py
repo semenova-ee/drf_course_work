@@ -30,7 +30,7 @@ class HabitCreateAPIView(generics.CreateAPIView):
 class HabitRetrieveAPIView(generics.RetrieveAPIView):
     serializer_class = HabitSerializer
     queryset = Habit.objects.all()
-    permission_classes = [IsAuthenticated, IsOwner]
+    permission_classes = [IsAuthenticated,]
 
 
 class HabitUpdateAPIView(generics.UpdateAPIView):
