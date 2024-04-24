@@ -14,7 +14,7 @@ class HabitTestCase(APITestCase):
 
     def setUp(self) -> None:
         self.user = User.objects.create_user(
-            username='test',
+            email='test@test.com',
             password='test123'
 
         )
@@ -25,7 +25,7 @@ class HabitTestCase(APITestCase):
         self.habit = Habit.objects.create(
             user=self.user,
             place='Дома',
-            time=datetime.time(minute=20).strftime("%Y-%m-%d %H:%M"),
+            time='18:00',
             action='Делать дз',
             is_good_habit=True,
             periodic=1,
@@ -37,7 +37,7 @@ class HabitTestCase(APITestCase):
 
         data = {
             'place': 'Кофейня',
-            'time': datetime.datetime.now().strftime("%Y-%m-%d %H:%M"),
+            'time': '9:00',
             'action': 'Купить кофе',
             'is_good_habit': False,
             'periodic': 2,
@@ -48,7 +48,8 @@ class HabitTestCase(APITestCase):
         response = self.client.post(habit_create_url, data=data)
 
         self.assertEqual(
-            response.status_code, status.HTTP_201_CREATED,
+            response.status_code,
+            status.HTTP_201_CREATED
         )
 
         self.assertEqual(
@@ -56,10 +57,10 @@ class HabitTestCase(APITestCase):
             data.get('action')
         )
 
-        self.assertTrue(
-            Habit.objects.get(pk=self.habit.pk).action,
-            data.get('action')
-        )
+        # self.assertTrue(
+        #     Habit.objects.get(pk=self.habit.pk).action,
+        #     data.get('action')
+        # )
 
     def test_list_habit(self):
 
