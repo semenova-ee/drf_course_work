@@ -14,7 +14,7 @@ def task_send_message():
     for habit in habits:
         # habit.time = time_now
         # habit.save()
-        if habit.time.strftime('%H:%M') == time_now and habit.periodic <= date_now:
+        if habit.time.strftime('%H:%M') == time_now and habit.periodic <= str(date_now):
             chat_id = habit.user.tg_id
             text_message = (f"Привет, {habit.user}! Надеюсь, у тебя хороший день."
                             f"Пора заняться {habit.action} в {habit.place}")
