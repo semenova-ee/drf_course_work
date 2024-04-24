@@ -1,9 +1,13 @@
 from rest_framework import generics
 from users.models import User
-from users.serializers import UserSerializer, UserCreateSerializer
+from users.serializers import UserSerializer, UserCreateSerializer, MyTokenObtainPairSerializer
 from rest_framework.permissions import IsAuthenticated
 from users.permissions import IsOwner
 
+from rest_framework_simplejwt.views import TokenObtainPairView
+
+class MyTokenObtainPairView(TokenObtainPairView):
+    serializer_class = MyTokenObtainPairSerializer
 
 """USER generics"""
 # ----------------------------------------------------------------
@@ -19,7 +23,7 @@ class UserCreateAPIView(generics.CreateAPIView):
 
     def perform_create(self, serializer):
         user = serializer.save()
-        user.set_password(serializer.data['password'])
+        user.set_password(user.password)
         user.save()
 
 
