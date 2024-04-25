@@ -25,7 +25,7 @@ class HabitCreateAPIView(generics.CreateAPIView):
     serializer_class = HabitCreateSerializer
     permission_classes = [IsAuthenticated]
 
-    task_send_message()
+    # task_send_message()
 
     def perform_create(self, serializer):
         serializer.save(user=self.request.user)

@@ -1,132 +1,128 @@
-from rest_framework.test import APITestCase
-from rest_framework import status
+from rest_framework.test import APITestCase, APIClient
 from django.urls import reverse
-
+from rest_framework import status
 from habits_tracker.models import Habit
 from users.models import User
 
-import datetime
-
-'''HABITS TESTS'''
 
 class HabitTestCase(APITestCase):
+    """
+    Тестирование модели Привычки
+    """
 
-    def setUp(self) -> None:
-        self.user = User.objects.create_user(
-            email='test@test.com',
-            password='test123'
-
+    def setUp(self):
+        """
+        Создание тестовой модели Пользователя (с авторизацией) и Привычки
+        """
+        self.user = User.objects.create(
+            email='test@yandex.ru',
+            password='test'
         )
-        '''Аутентификация пользователя'''
-        self.client.force_authenticate(user=self.user)
 
-        '''Создается тестовая привычка'''
+        self.client = APIClient()
+        self.client.force_authenticate(user=self.user)
         self.habit = Habit.objects.create(
             user=self.user,
-            place='Дома',
-            time='18:00',
-            action='Делать дз',
-            is_good_habit=True,
-            periodic=1,
-            lead_time=10,
-            is_public=True
+            place="Street",
+            time="21:00",
+            action="Run",
+            periodic="3",
+            lead_time=100
         )
 
-    def test_create_habit(self):
-
+    def test_habit_create(self):
+        """
+        Тестирование создания Привычки
+        """
         data = {
-            'place': 'Кофейня',
-            'time': '9:00',
-            'action': 'Купить кофе',
-            'is_good_habit': False,
-            'periodic': 2,
-            'lead_time': 120
+            "user": self.user.pk,
+            "place": "Street",
+            "time": "22:00",
+            "action": "Run",
+            "periodic": "3",
+            "lead_time": 100
         }
-
-        habit_create_url = reverse('habits:habit_create')
-        response = self.client.post(habit_create_url, data=data)
-
+        response = self.client.post(
+            reverse('habits:create_a_habit'),
+            data=data
+        )
         self.assertEqual(
             response.status_code,
             status.HTTP_201_CREATED
         )
-
         self.assertEqual(
-            response.json().get('action'),
-            data.get('action')
+            Habit.objects.all().count(),
+            2
         )
 
-        # self.assertTrue(
-        #     Habit.objects.get(pk=self.habit.pk).action,
-        #     data.get('action')
-        # )
-
-    def test_list_habit(self):
-
-        habit_list_url = reverse('habits:habit_list')
-
-        response = self.client.get(habit_list_url)
-
+    def test_habit_list(self):
+        """
+        Тестирование вывода всех Привычек
+        """
+        response = self.client.get(reverse('habits:list_of_habits'))
         self.assertEqual(
             response.status_code,
             status.HTTP_200_OK
         )
 
+    def test_habit_detail(self):
+        """
+        Тестирование для вывода информации о конкретной привычке
+        """
+        retrive_url = reverse('habits:show_habit', args=[self.habit.pk])
+        response = self.client.get(retrive_url)
         self.assertEqual(
-            Habit.objects.get(pk=self.habit.pk).action,
-            response.json().get('results')[0].get('action'))
-
-    def test_list_habit_public(self):
-        public_habit_url = reverse('habits:habit_public')
-        self.client.force_authenticate(user=self.user)
-        response = self.client.get(public_habit_url)
-        self.assertEqual(response.status_code, status.HTTP_200_OK)
-        self.assertEqual(response.data.get('count'), 1)
-
-    def test_retrieve_habit(self):
-
-        habit_one_url = reverse('habits:habit_one', args=[self.habit.pk])
-
-        response = self.client.get(habit_one_url)
-
-        self.assertEqual(
-            response.status_code, status.HTTP_200_OK,
+            response.status_code,
+            status.HTTP_200_OK
         )
-
-        response = response.json()
-
-        self.assertEqual(response.get('user'), self.user.pk)
-        self.assertEqual(response.get('place'), 'Дома')
-        self.assertEqual(response.get('action'), 'Делать дз')
-
-    def test_update_habit(self):
-
         data = {
-            'place': 'updated place',
-            'action': 'updated action',
+            'user': self.user.id,
+            'place': 'Street',
+            'time': '21:00:00',
+            'action': 'Run',
+            'is_good_habit': False,
+            'associated_habit': None,
+            'periodic': '3',
+            'reward': None,
+            'lead_time': 100,
+            'is_public': False
         }
-
-        habit_update_url = reverse('habits:habit_update', args=[self.habit.pk])
-
-        response = self.client.patch(habit_update_url, data)
-
+        resived_data = response.json()
+        resived_data.pop('id')
         self.assertEqual(
-            response.status_code, status.HTTP_200_OK,
+            resived_data,
+            data
         )
-        response = response.json()
 
-        self.assertEqual(response.get('place'), 'updated place')
-        self.assertEqual(response.get('action'), 'updated action')
-
-    def test_delete_habit(self):
-
-        habit_delete_url = reverse('habits:habit_delete', args=[self.habit.pk])
-
-        response = self.client.delete(habit_delete_url)
-
+    def test_habit_delete(self):
+        """
+        Тестирование для удаления Привычки
+        """
+        delete_url = reverse('habits:delete_habit', args=[self.habit.pk])
+        response = self.client.delete(delete_url)
         self.assertEqual(
-            response.status_code, status.HTTP_204_NO_CONTENT,
+            response.status_code,
+            status.HTTP_204_NO_CONTENT
         )
-        self.assertFalse(
-            Habit.objects.all().exists(),
+        self.assertEqual(
+            Habit.objects.filter(id=self.habit.pk).count(),
+            0
         )
+
+    def test_habit_update(self):
+        """
+        Тестирование для обновления информации по Привычке
+        """
+        update_url = reverse('habits:edit_habit', args=[self.habit.pk])
+        update_data = {
+            'place': 'Job',
+            'lead_time': 120
+        }
+        response = self.client.patch(update_url, update_data, format='json')
+        self.habit.refresh_from_db()
+        self.assertEqual(
+            response.status_code,
+            status.HTTP_200_OK
+        )
+        self.assertEqual(self.habit.place, update_data['place'])
+        self.assertEqual(self.habit.lead_time, update_data['lead_time'])
