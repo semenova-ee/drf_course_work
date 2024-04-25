@@ -9,7 +9,6 @@ import datetime
 
 '''HABITS TESTS'''
 
-
 class HabitTestCase(APITestCase):
 
     def setUp(self) -> None:

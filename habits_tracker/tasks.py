@@ -6,17 +6,20 @@ from habits_tracker.services import MessageToTelegram
 
 @shared_task
 def task_send_message():
-    date_now = datetime.today().weekday()
-    time_now = datetime.utcnow().time().strftime('%H:%M')
+    # date_now = datetime.today().weekday()
+    # time_now = datetime.utcnow().time().strftime('%H:%M')
 
     habits = Habit.objects.filter(is_good_habit=False)
 
     for habit in habits:
         # habit.time = time_now
         # habit.save()
-        if habit.time.strftime('%H:%M') == time_now and habit.periodic <= str(date_now):
-            chat_id = habit.user.tg_id
-            text_message = (f"Привет, {habit.user}! Надеюсь, у тебя хороший день."
-                            f"Пора заняться {habit.action} в {habit.place}")
-            message = MessageToTelegram()
-            message.send_habit(text=text_message,chat_id=chat_id)
+        # if habit.time.strftime('%H:%M') == time_now and habit.periodic <= str(date_now):
+        chat_id = habit.user.tg_id
+        text_message = (f"Привет, {habit.user}! Надеюсь, у тебя хороший день."
+                        f"Ты создал привычку {habit.action} в {habit.place}."
+                        f"Ее нужно выполнять с периодичностью {habit.periodic} раз в неделю.")
+        message = MessageToTelegram()
+        message.send_habit(text=text_message,chat_id=chat_id)
+
+
