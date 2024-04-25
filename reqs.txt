@@ -9,6 +9,7 @@ click-didyoumean==0.3.1
 click-plugins==1.1.1
 click-repl==0.3.0
 colorama==0.4.6
+coverage==7.5.0
 cron-descriptor==1.4.3
 Django==5.0.4
 django-celery-beat==2.6.0
@@ -25,6 +26,7 @@ packaging==24.0
 prompt-toolkit==3.0.43
 psycopg2==2.9.9
 PyJWT==2.8.0
+pytest==8.1.1
 python-crontab==3.0.0
 python-dateutil==2.9.0.post0
 python-dotenv==1.0.1
