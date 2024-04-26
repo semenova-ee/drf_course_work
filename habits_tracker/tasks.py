@@ -9,8 +9,8 @@ def task_send_message():
     date_now = datetime.today().weekday()
     time_now = datetime.utcnow().time().strftime('%H:%M')
 
-    # habits = Habit.objects.filter(is_good_habit=False)
-    habits = Habit.objects.all()
+    habits = Habit.objects.filter(is_good_habit=False)
+    # habits = Habit.objects.all()
 
     for habit in habits:
         # habit.time = time_now
