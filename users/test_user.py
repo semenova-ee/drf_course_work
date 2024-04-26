@@ -15,7 +15,7 @@ class UserTestCase(APITestCase):
         """
         self.user = User.objects.create(
             email='serious@yandex.ru',
-            tg_id=733615152,
+            tg_id=503622235,
             password='12345678'
         )
 
@@ -25,7 +25,7 @@ class UserTestCase(APITestCase):
         """
         data = {
             "email": "test1328@yandex.ru",
-            "tg_id": 13281328,
+            "tg_id": 503622235,
             "password": "test1328"
         }
         response = self.client.post(
@@ -49,7 +49,7 @@ class UserTestCase(APITestCase):
         )
         data = {
             'email': 'serious@yandex.ru',
-            'tg_id': 733615152,
+            'tg_id': 503622235,
             'password': '12345678'
         }
         retrive_data = response.json()
@@ -80,7 +80,7 @@ class UserTestCase(APITestCase):
         """
         update_url = reverse('users:user_update', args=[self.user.pk])
         update_data = {
-            'tg_id': 12345678
+            'tg_id': 503622235
         }
         response = self.client.patch(update_url, update_data, format='json')
         self.user.refresh_from_db()

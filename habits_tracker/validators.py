@@ -40,7 +40,7 @@ class TimeHabitValidator:
 
     def __call__(self, value):
         lead_time = dict(value).get(self.field)
-        if lead_time > 120:
+        if int(lead_time) > 120:
             raise ValidationError('Время выполнения не должно превышать 120 сек!')
 
 

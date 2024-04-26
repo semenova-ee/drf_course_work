@@ -8,6 +8,7 @@ class Command(BaseCommand):
         for obj in range(3):
             user = User.objects.create(
                 email=f'user{obj}@user.com',
+                tg_id=503622235,
                 is_active=True,
             )
             user.set_password('123')

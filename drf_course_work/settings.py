@@ -151,7 +151,7 @@ CELERY_TASK_TRACK_STARTED = True
 # Максимальное время на выполнение задачи
 CELERY_TASK_TIME_LIMIT = 30 * 60
 # Часовой пояс для работы Celery
-# CELERY_TIMEZONE = "Australia/Tasmania"
+CELERY_TIMEZONE = "UTC"
 
 # CELERY_BEAT
 CELERY_BEAT_SCHEDULE = {
