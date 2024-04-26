@@ -15,6 +15,7 @@ class HabitListAPIView(generics.ListAPIView):
     permission_classes = [IsAuthenticated]
 
     def get_queryset(self):
+        # task_send_message()
         if not Habit.objects.all().filter(user=self.request.user):
             raise ValueError('В списке еще нет ни одной привычки!')
         else:
@@ -25,10 +26,10 @@ class HabitCreateAPIView(generics.CreateAPIView):
     serializer_class = HabitCreateSerializer
     permission_classes = [IsAuthenticated]
 
-    # task_send_message()
 
     def perform_create(self, serializer):
         serializer.save(user=self.request.user)
+        # task_send_message.delay()
 
 
 class HabitRetrieveAPIView(generics.RetrieveAPIView):
