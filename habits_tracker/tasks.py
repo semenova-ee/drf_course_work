@@ -13,7 +13,7 @@ def task_send_message():
     habits = Habit.objects.filter(is_good_habit=False)
 
     for habit in habits:
-        rate = int(habit.periodic) #получаем значение периодичности
+        rate = habit.periodic #получаем значение периодичности
         time_now = datetime.utcnow().time().strftime('%H:%M') #получаем текущее время
         date_today = datetime.today().date() #получаем текущую дату
         days_since_last_send = (datetime.today().date()-habit.date_last_send).days #находим разницу между текущим днем и днем отправки, получаем кол-во дней

@@ -10,13 +10,13 @@ NULLABLE = {'blank': True, 'null': True}
 class Habit(models.Model):
 
     HABIT_PERIOD = [
-        ('1', 'Каждый день'),
-        ('2', 'Каждые 2 дня'),
-        ('3', 'Каждые 3 дня'),
-        ('4', 'Каждые 4 дня'),
-        ('5', 'Каждые 5 дней'),
-        ('6', 'Каждые 6 дней'),
-        ('7', 'Раз в неделю')
+        (1, 'Каждый день'),
+        (2, 'Каждые 2 дня'),
+        (3, 'Каждые 3 дня'),
+        (4, 'Каждые 4 дня'),
+        (5, 'Каждые 5 дней'),
+        (6, 'Каждые 6 дней'),
+        (7, 'Раз в неделю')
     ]
 
     user = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name='пользователь', **NULLABLE)
@@ -24,7 +24,7 @@ class Habit(models.Model):
     time = models.TimeField(default=timezone.now, verbose_name='время')
     action = models.CharField(max_length=255, verbose_name='действие')
     is_good_habit = models.BooleanField(default=False, verbose_name='признак приятной привычки', **NULLABLE)
-    periodic = models.CharField(max_length=20, choices=HABIT_PERIOD, verbose_name='периодичность')
+    periodic = models.PositiveSmallIntegerField(choices=HABIT_PERIOD, verbose_name='периодичность')
     lead_time = models.IntegerField(verbose_name='время выполнения', **NULLABLE)
     is_public = models.BooleanField(default=False, verbose_name='публичный')
     reward = models.CharField(max_length=255, verbose_name='награда', **NULLABLE)
