@@ -53,3 +53,8 @@ class PeriodicHabitValidator:
         tmp_val = dict(value).get(self.field)
         if int(tmp_val) > 7:
             raise ValidationError('Нельзя выполнять привычку реже, чем 1 раз в 7 дней')
+        date_last_send = dict(value).get('date_last_send')
+        if date_last_send is None:
+            raise ValidationError('Нельзя оставить date_last_send пустым. '
+                                  'Если ты только создаешь привычку, поставь текущую дату. '
+                                  'Напоминание придет в заданный период')

@@ -24,7 +24,7 @@ class HabitCreateSerializer(serializers.ModelSerializer):
     class Meta:
         model = Habit
         fields = ('id', 'user', 'place', 'time', 'action', 'periodic', 'is_public', 'lead_time', 'associated_habit',
-                  'is_good_habit', 'reward')
+                  'is_good_habit', 'reward', 'date_last_send')
         validators = [GoodHabitValidator(fields),
                       IsGoodHabitValidator(fields='associated_habit'),
                       TimeHabitValidator(field='lead_time'),

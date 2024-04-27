@@ -27,7 +27,8 @@ class HabitTestCase(APITestCase):
             time="21:00",
             action="Run",
             periodic="3",
-            lead_time=100
+            lead_time=100,
+            date_last_send="2024-04-27"
         )
 
     def test_habit_create(self):
@@ -40,7 +41,8 @@ class HabitTestCase(APITestCase):
             "time": "22:00",
             "action": "Run",
             "periodic": "3",
-            "lead_time": 100
+            "lead_time": 100,
+            "date_last_send": "2024-04-27"
         }
         response = self.client.post(
             reverse('habits:create_a_habit'),
@@ -85,7 +87,8 @@ class HabitTestCase(APITestCase):
             'periodic': '3',
             'reward': None,
             'lead_time': 100,
-            'is_public': False
+            'is_public': False,
+            'date_last_send': "2024-04-27"
         }
         resived_data = response.json()
         resived_data.pop('id')
