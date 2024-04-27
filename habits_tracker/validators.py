@@ -12,13 +12,13 @@ class GoodHabitValidator:
         habit_reward = dict(value).get('reward')  # награда
 
         if habit_is_good and habit_reward is not None:
-            raise ValidationError('У приятной привычки нет награды!')
+            raise ValidationError('У приятной привычки нельзя указать награду!')
 
         if habit_is_good and habit_is_linked is not None:
             raise ValidationError('Нельзя выбрать приятную и связанную привычки одновременно!')
 
         if habit_is_linked and habit_reward is None:
-            raise ValidationError('Можно выбрать связанную привычку и награду одновременно!')
+            raise ValidationError('Нужно выбрать связанную привычку и указать награду одновременно!')
 
 
 class IsGoodHabitValidator:
