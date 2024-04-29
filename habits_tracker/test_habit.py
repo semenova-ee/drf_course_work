@@ -26,7 +26,7 @@ class HabitTestCase(APITestCase):
             place="Street",
             time="21:00",
             action="Run",
-            periodic="3",
+            periodic=3,
             lead_time=100,
             date_last_send="2024-04-27"
         )
@@ -40,7 +40,7 @@ class HabitTestCase(APITestCase):
             "place": "Street",
             "time": "22:00",
             "action": "Run",
-            "periodic": "3",
+            "periodic": 3,
             "lead_time": 100,
             "date_last_send": "2024-04-27"
         }
@@ -84,7 +84,7 @@ class HabitTestCase(APITestCase):
             'action': 'Run',
             'is_good_habit': False,
             'associated_habit': None,
-            'periodic': '3',
+            'periodic': 3,
             'reward': None,
             'lead_time': 100,
             'is_public': False,
