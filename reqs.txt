@@ -25,7 +25,7 @@ inflection==0.5.1
 kombu==5.3.7
 packaging==24.0
 prompt-toolkit==3.0.43
-psycopg2==2.9.9
+psycopg2-binary==2.9.9
 PyJWT==2.8.0
 pytest==8.1.1
 python-crontab==3.0.0

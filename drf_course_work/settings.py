@@ -80,8 +80,8 @@ DATABASES = {
         'NAME': os.getenv('POSTGRES_DB'),
         'USER': os.getenv('POSTGRES_USER'),
         'PASSWORD': os.getenv('POSTGRES_PASSWORD'),
-        'HOST': '127.0.0.1',
-        'PORT': '5432',
+        'HOST': os.getenv('POSTGRES_HOST'),
+        'PORT': os.getenv('POSTGRES_PORT'),
     }
 }
 
@@ -143,9 +143,11 @@ SIMPLE_JWT = {
 
 # CELERY
 # URL-адрес брокера сообщений
-CELERY_BROKER_URL = 'redis://127.0.0.1:6379/0'
+# CELERY_BROKER_URL = 'redis://127.0.0.1:6379/0'
+CELERY_BROKER_URL = os.getenv('CELERY_BROKER_URL')
 # URL-адрес брокера результатов, также Redis
-CELERY_RESULT_BACKEND = 'redis://127.0.0.1:6379/0'
+# CELERY_RESULT_BACKEND = 'redis://127.0.0.1:6379/0'
+CELERY_RESULT_BACKEND = os.getenv('CELERY_RESULT_BACKEND')
 # Отслеживание задач CELERY
 CELERY_TASK_TRACK_STARTED = True
 # Максимальное время на выполнение задачи
